@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PepitoSchool.App.Interfaces
 {
-    public interface IEstudianteService : IService<Estudiante>
+    public interface IEstudianteService : ISERVICES<Estudiante>
    {
         Estudiante FindByCarnet(string carnet);
         List<Estudiante> FindByNames(string names);

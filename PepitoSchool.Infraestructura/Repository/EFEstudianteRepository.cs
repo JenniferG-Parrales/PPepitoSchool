@@ -1,5 +1,6 @@
 ﻿using PepitoSchool.Domain.Entities;
 using PepitoSchool.Domain.Interfaces;
+using PepitoSchool.Domain.PepitoSchoolDBEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,45 +11,19 @@ namespace PepitoSchool.Infraestructura.Repository
 {
     public class EFEstudianteRepository : IEstudianteRepository
     {
-        public IPepitoSchoolContext pepitoSchoolDBContext;
+        public PepitoSchoolContext estudianteDBContext;
 
-        public EFEstudianteRepository(IPepitoSchoolContext pepitoSchoolDBContext)
+        public EFEstudianteRepository(PepitoSchoolContext estudianteDBContext)
         {
-            this.pepitoSchoolDBContext = pepitoSchoolDBContext;
+            this.estudianteDBContext = estudianteDBContext;
         }
-        public void Create(Estudiante t)
+
+        public void create(Estudiante t)
         {
             try
             {
-                pepitoSchoolDBContext.Estudiantes.Add(t);
-                pepitoSchoolDBContext.SaveChanges();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-
-        }
-
-        public bool Delete(Estudiante t)
-        {
-            try
-            {
-                if (t == null)
-                {
-                    throw new ArgumentNullException("El objeto Asset no puede ser null.");
-                }
-
-                Estudiante estudiante = FindByCarnet(t.Carnet);
-                if (estudiante == null)
-                {
-                    throw new Exception($"El objeto con id {t.Carnet} no existe.");
-                }
-
-                pepitoSchoolDBContext.Estudiantes.Remove(estudiante);
-                int result = pepitoSchoolDBContext.SaveChanges();
-
-                return result > 0;
+                estudianteDBContext.Estudiantes.Add(t);
+                estudianteDBContext.SaveChanges();
             }
             catch (Exception)
             {
@@ -56,95 +31,81 @@ namespace PepitoSchool.Infraestructura.Repository
             }
         }
 
-        public Estudiante FindByCarnet(string carnet)
+        public void Delete(Estudiante t)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(carnet))
-                {
-                    throw new Exception($"El parametro carnet {carnet} no tiene el formato correcto.");
-                }
-
-                return pepitoSchoolDBContext.Estudiantes.FirstOrDefault(x => x.Carnet.Equals(carnet));
+                estudianteDBContext.Estudiantes.Remove(t);
+                estudianteDBContext.SaveChanges();
             }
-            catch
+            catch (Exception)
             {
                 throw;
             }
         }
 
-        public List<Estudiante> FindByLastnames(string lastnames)
+        public Estudiante FindById(int id)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(lastnames))
+                if (id <= 0)
                 {
-                    throw new Exception($"El parametro carnet {lastnames} no tiene el formato correcto.");
+                    throw new Exception($"El id {id} no puede ser menor o igual a cero.");
                 }
 
-                return pepitoSchoolDBContext.Estudiantes.Where(x => x.Apellidos.Equals(lastnames)).ToList(); ;
+                return estudianteDBContext.Estudiantes.FirstOrDefault(x => x.Id == id);
             }
-            catch
+            catch (Exception)
             {
                 throw;
             }
         }
 
-        public List<Estudiante> FindByNames(string names)
+        public List<Estudiante> Read()
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(names))
-                {
-                    throw new Exception($"El parametro carnet {names} no tiene el formato correcto.");
-                }
-
-                return pepitoSchoolDBContext.Estudiantes.Where(x => x.Nombres.Equals(names)).ToList(); ;
+                return estudianteDBContext.Estudiantes.ToList();
             }
-            catch
+            catch (Exception)
             {
                 throw;
             }
         }
 
-        public List<Estudiante> GetAll()
+        void IRepository<Estudiante>.Create(Estudiante t)
         {
-            return pepitoSchoolDBContext.Estudiantes.ToList();
+            throw new NotImplementedException();
         }
 
-        public int Update(Estudiante t)
+        bool IRepository<Estudiante>.Delete(Estudiante t)
         {
-            try
-            {
-                if (t == null)
-                {
-                    throw new ArgumentNullException("El objeto asset no puede ser null.");
-                }
+            throw new NotImplementedException();
+        }
 
-                Estudiante estudiantes = FindByCarnet(t.Carnet);
-                if (estudiantes == null)
-                {
-                    throw new Exception($"El objeto Estudiante con id {t.Carnet} no existe.");
-                }
-                estudiantes.Id = t.Id;
-                estudiantes.Nombres = t.Nombres;
-                estudiantes.Apellidos = t.Apellidos;
-                estudiantes.Phone = t.Phone;
-                estudiantes.Carnet = t.Carnet;
-                estudiantes.Direccion = t.Direccion;
-                estudiantes.Correo = t.Correo;
-                estudiantes.Matematica = t.Matematica;
-                estudiantes.Estadistica = t.Estadistica;
-                estudiantes.Contabilidad = t.Contabilidad;
-                estudiantes.Programacion = t.Programacion;
+        Estudiante IEstudianteRepository.FindByCarnet(string carnet)
+        {
+            throw new NotImplementedException();
+        }
 
-                pepitoSchoolDBContext.Estudiantes.Update(estudiantes);
-                return pepitoSchoolDBContext.SaveChanges();
-            }
-            catch
-            {
-                throw;
-            }
+        List<Estudiante> IEstudianteRepository.FindByLastnames(string lastnames)
+        {
+            throw new NotImplementedException();
+        }
+
+        List<Estudiante> IEstudianteRepository.FindByNames(string names)
+        {
+            throw new NotImplementedException();
+        }
+
+        List<Estudiante> IRepository<Estudiante>.GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        int IRepository<Estudiante>.Update(Estudiante t)
+        {
+            throw new NotImplementedException();
         }
     }
 }

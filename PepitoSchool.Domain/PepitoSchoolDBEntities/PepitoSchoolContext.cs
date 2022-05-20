@@ -1,8 +1,8 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+using System.Data.Entity;
 using PepitoSchool.Domain.Entities;
 using PepitoSchool.Domain.Interfaces;
+
 
 namespace PepitoSchool.Domain.PepitoSchoolDBEntities
 {
@@ -28,7 +28,7 @@ namespace PepitoSchool.Domain.PepitoSchoolDBEntities
             //            }
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
@@ -70,6 +70,6 @@ namespace PepitoSchool.Domain.PepitoSchoolDBEntities
             OnModelCreatingPartial(modelBuilder);
         }
 
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+        partial void OnModelCreatingPartial(DbModelBuilder modelBuilder);
     }
 }

@@ -1,21 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 
 using Microsoft.Extensions.DependencyInjection;
 using PepitoSchool.App.Interfaces;
 using PepitoSchool.App.Services;
 using PepitoSchool.Domain.Interfaces;
 using PepitoSchool.Domain.PepitoSchoolDBEntities;
-using PepitoSchool.Forms.Forms;
-using PepitoSchool.Infraestructure.Repository;
+using PepitoSchool.Forms;
+using PepitoSchool.Infraestructura.Repository;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PepitoSchool
+namespace DepreciationDBApp
 {
     static class Program
     {
@@ -53,12 +48,12 @@ namespace PepitoSchool
             });
             services.AddScoped<IPepitoSchoolContext, PepitoSchoolContext>();
             services.AddScoped<IEstudianteRepository, EFEstudianteRepository>();
-            services.AddScoped<IEstudiantesServices, EstudianteServices>();
-            services.AddScoped<Principal>();
+            services.AddScoped<IEstudianteService, EstudianteServices>();
+            services.AddScoped<FormPincipoal>();
 
             using (var serviceScope = services.BuildServiceProvider())
             {
-                var main = serviceScope.GetRequiredService<Principal>();
+                var main = serviceScope.GetRequiredService<FormPincipoal>();
                 Application.Run(main);
             }
 

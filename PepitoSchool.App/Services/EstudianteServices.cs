@@ -20,7 +20,7 @@ namespace PepitoSchool.App.Services
         {
             if (t == null)
             {
-                throw new ArgumentNullException("El estudiante no puede ser null.");
+                throw new ArgumentNullException("Estudiante no puede ser null.");
             }
 
             estudianteRepository.Create(t);
@@ -31,7 +31,7 @@ namespace PepitoSchool.App.Services
         {
             if (t == null)
             {
-                throw new ArgumentNullException("El estudiante no puede ser null.");
+                throw new ArgumentNullException("Estudiante no puede ser null.");
             }
             return estudianteRepository.Delete(t);
         }

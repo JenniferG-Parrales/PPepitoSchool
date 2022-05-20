@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PepitoSchool.Domain.Interfaces
 {
-    public class IPepitoSchoolContext
+    public interface IPepitoSchoolContext
     {
         public DbSet<Estudiante> Estudiantes { get; set; }
 
